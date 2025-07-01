@@ -1,8 +1,16 @@
-'''versione 9 mattina da GITHUB'''
+'''search motif è stata sostituita con extract motif'''
 from abc import ABC, abstractmethod
 import pandas as pd
 from Bio.Align import PairwiseAligner
-from collections import Counter
+
+
+# Decoratore per validare la presenza del dataset caricato
+def ensure_data_loaded(func):
+    def wrapper(self, *args, **kwargs):
+        if self._data is None:  # o si cambia come è scritto il decoratore oppure va messo dentro la classe perchè altrimenti non può accedere direttamente al self.__data; in ogni caso dove era stato messso a decorare un'altra funzione non andava bene
+            raise ValueError("Nessun dataset caricato. Caricare un file FASTA prima di eseguire l'operazione.")
+        return func(self, *args, **kwargs)
+    return wrapper
 
 class FileParser(ABC):
     def __init__(self):
@@ -18,15 +26,6 @@ class FastaParser:
 
     def __init__(self):
         self._data = None
-
-    @staticmethod  #forse così? così almeno come argomento gli va bene solo function
-    # Decoratore per validare la presenza del dataset caricato
-    def ensure_data_loaded(func):
-        def wrapper(self, *args, **kwargs):
-            if self._data is None:  # o si cambia come è scritto il decoratore oppure va messo dentro la classe perchè altrimenti non può accedere direttamente al self.__data; in ogni caso dove era stato messso a decorare un'altra funzione non andava bene
-                raise ValueError("Nessun dataset caricato. Caricare un file FASTA prima di eseguire l'operazione.")
-            return func(self, *args, **kwargs)
-        return wrapper
 
     def parse_file(self, file: str) -> None:
         """Effettua il parsing del file FASTA e memorizza i dati in un DataFrame."""
@@ -61,12 +60,27 @@ class FastaParser:
         return self._data.describe(include="all")
 
     @ensure_data_loaded #aggiunto
-    def get_seq(self, index):
+    def get_row(self, index: int ):
         """Restituisce la sequenza e i dettagli della riga indicata."""
         if index >= len(self._data) or index < 0:
             raise IndexError(f"Indice {index} fuori dai limiti).")
-        seq = self._data.iloc[index].tolist()
-        return seq
+        row = self._data.iloc[index].tolist()
+        return row
+
+
+
+parser = FastaParser()
+parsed_file=parser.parse_file('file.fasta')
+df=parser.get_DataFrame()
+summary_file=parser.get_summary()
+print(type(summary_file))
+sequence=parser.get_row(1)
+print('ciao')
+print(type(sequence))
+print('ciaooo')
+
+    
+    
 # superclasse per sequenze
 class GenomicEntity(ABC):
     def __init__(self, identifier, description, sequence):
@@ -93,7 +107,20 @@ class MitochondrialDNA(GenomicEntity):
     def extract_subseq_by_indexing(self, start, end):
         return self._sequence[start:end + 1]
     
+    
+dna=MitochondrialDNA(*sequence)
+dna_attributes=dna.get_attributes_value()
+print(type(dna_attributes))
+dna_gc=dna.gc_content()
+print(type(dna_gc))
+seq_idx=1
+print(df.iloc[seq_idx])
+DNA=MitochondrialDNA(*df.iloc[seq_idx])
+print(DNA.get_attributes_value())
+print(DNA.extract_subseq_by_indexing(0, 5))
+
 #CLASSE ASTRATTA PERCHè POTREI NON VOLER LAVORARE CON UN DATA FRAME MA CON UNA STRINGA, O QUALSIASI COSA, QUINDI FACCIAMO IN MODO CHE IL NOSTRO SIA UN CASO PARTICOLARE
+#MOTIF
 class MotifAnalyser(ABC):
     def __init__(self, data):
         self._data = data #nel nostro caso il dato sarà il dataframe
@@ -106,13 +133,27 @@ class MotifAnalyser(ABC):
 class SequenceMotif(MotifAnalyser): #inerita init da superclasse
     #Estrae tutte le subsequenze di lunghezza motif_length dalla sequence e restituisce una lista di motivi.
     # Conta le occorrenze di ciascun motivo (usa Counter() di collections). Filtra i motivi che compaiono più di minimum volte. Restituisce un DataFrame con i motivi e la loro frequenza.
-    def extract_motifs(self, sequence, motif_length, minimum):
-        motifs = [sequence[i:i + motif_length] for i in range(len(sequence) - motif_length + 1)]
-        motif_counts = dict(Counter(motifs))
-        recurrent_motifs = {motif: count for motif, count in motif_counts.items() if count >= minimum}
-        motifs_df = pd.DataFrame(list(recurrent_motifs.items()), columns=["motif", "count"]).set_index("motif")
+    
+    def extract_motifs(self, seq_idx, motif_length, minimum):
+        motifs=[]
+        motifs_dic={}
+        sequence= self._data.iloc[seq_idx]['Sequence']
+        for i in range(len(sequence) - motif_length + 1):
+            motif=sequence[i:i + motif_length]
+            if motif in motifs_dic:
+                motifs_dic[motif].append(i)
+            else:
+                motifs_dic[motif]=[i] #so that then the frequency should be just the length of the list of initial indexes
+        md=motifs_dic.copy() #otherwise it changes size while itinerating if we itinerate over the original
+        for k, v in md.items():
+            if len(v)<= minimum:
+                del motifs_dic[k]
+            else:
+                motifs.append([k, v])
+        motifs_df=pd.DataFrame(motifs, columns=['Motif', 'Indexes'])
+                
         return motifs_df
-
+    
     #Cerca un motivo genetico specifico in tutte le sequenze del dataframe e ti dice quante volte l'ha trovato per ogni sequenza
     def find_motif(self, motif):
         
@@ -122,10 +163,24 @@ class SequenceMotif(MotifAnalyser): #inerita init da superclasse
             count = row["Sequence"].count(motif)
             results.append((row["Identifier"], motif, count))
         return pd.DataFrame(results, columns=["Identifier", "Motif", "Occurrences"])
-    
-# Classe per l'allineamento
+
+
+motif_analyzer = SequenceMotif(df)
+seq_idx=1
+motif_length=4
+minimum=6
+extraction=motif_analyzer.extract_motifs(seq_idx, motif_length, minimum)
+#print(extraction)
+print(type(extraction))
+motif_input_find='ATGGT'
+found_motif = motif_analyzer.find_motif(motif_input_find)
+#print(found_motif)
+print(type(found_motif))
+
+
+# ALIGNMENT
 class SequenceAlignment:
-    def __init__(self, seq1, seq2): #Inizializza l'oggetto di allineamento con due sequenze.
+    def __init__(self, seq1:str, seq2:str): #Inizializza l'oggetto di allineamento con due sequenze.
         self.__seq1 = seq1
         self.__seq2 = seq2
         self.__aligner = PairwiseAligner()
@@ -136,11 +191,24 @@ class SequenceAlignment:
         self.__alignments = self.__aligner.align(self.__seq1, self.__seq2)
         return self.__alignments
 
-    def format_alignment(self, n=1): #Formatta e restituisce i primi N risultati di allineamento
+    def format_alignment(self, n=1) -> str: #Formatta e restituisce i primi N risultati di allineamento
         results = []
         for alignment in self.__alignments[n]:
             results.append(str(alignment))
         return "\n".join(results)
 
-    def alignments_score(self): #Questa funzione restituisce il punteggio dell'allineamento (ovvero la qualità dell'allineamento stesso), che è una misura di quanto siano simili le due sequenze.
+    def alignments_score(self) -> float: #Questa funzione restituisce il punteggio dell'allineamento (ovvero la qualità dell'allineamento stesso), che è una misura di quanto siano simili le due sequenze.
         return self.__alignments.score
+'''
+seq1='ATGGT'
+seq2='ATGT'
+alignment = SequenceAlignment(seq1, seq2)
+alignment_performed=alignment.perform_alignment()
+print(type(alignment_performed))
+result = alignment.format_alignment()
+score = alignment.alignments_score()
+print(result)
+print(type(result))
+print(score)
+print(type(score))
+'''
