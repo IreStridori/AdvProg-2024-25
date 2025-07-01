@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FASTA Stats</title>
+</head>
+<body>
+    <h1>FASTA Sequence Statistics</h1>
+    <p> Would you like to do some more operations with your sequences? </p>
+    <a href="/motif">Search Motif</a> | <a href="/align">Align Sequences</a>
+    <p>Go back to the <a href="/dataframe">table page</a>.</p>
+    <p>Go back to the <a href="/">home page</a>.</p>
+    <h2> This is the summary table that shows the sequences in your file </h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Length</th>
+            <th>GC Content</th>
+        </tr>
+        {% for s in stats %}
+        <tr>
+            <td>{{ s.ID }}</td>
+            <td>{{ s.Description }}</td>
+            <td>{{ s.Length }}</td>
+            <td>{{ s["GC Content"] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

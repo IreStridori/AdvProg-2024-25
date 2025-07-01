@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FASTA dataframe</title>
+</head>
+<body>
+    <h1>FASTA Sequence Statistics</h1>
+    <p> Would you like to do some more operations with your sequences? </p>
+    <a href="/stats">Visualize statistics </a>
+    <a href="/motif">Search Motif</a> | <a href="/align">Align Sequences</a>
+    <p>Go back to the <a href="/">home page</a>.</p>
+    <h2> This is the summary table that shows the sequences in your file </h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Sequence </th>
+        </tr>
+        {% for s in stats %}
+        <tr>
+            <td>{{ s.ID }}</td>
+            <td>{{ s.Description }}</td>
+            <td>{{s.Sequence}} </td>
+        </tr>
+        {% endfor %}
+    </table >
+
+</body>
+</html>

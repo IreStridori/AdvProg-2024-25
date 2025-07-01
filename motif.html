@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Motif Search</title>
+</head>
+<body>
+    <h1>Search for a conserved Motif</h1>
+    <p> Do you have a known motif and want to know its statistics in the sequences of the dataset? </p>
+    <form action="/motif" method="post">
+        <input type="text" name="motif" placeholder="Enter motif">
+        <button type="submit">Search</button>
+    </form>
+    <br>
+     <p> If you don't, just insert: the sequence that you want to analyse, the length of the motif and the minimum of times that it has to be repeated </p>
+    <form action="/motif" method="post">
+        <input type="text" name="motif" placeholder="Enter: sequence, motif length, minimum">
+        <button type="submit">Search</button>
+    </form>
+    
+    {% if results %}
+    <h2>Results</h2>
+    <ul>
+        {% for r in results %}
+        <li>{{ r }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <p>Go back to the <a href="/dataframe">table page</a>.</p>
+    <p>Go back to the <a href="/">home page</a>.</p>
+</body>
+</html>

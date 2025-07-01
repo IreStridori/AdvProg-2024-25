@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sequence Alignment</title>
+</head>
+<body>
+    <h1>Align Sequences</h1>
+
+    <p>{{ message }}</p>
+
+    <form action="/align" method="post">
+        <input type="number" name="seq1" placeholder="Sequence 1 index">
+        <input type="number" name="seq2" placeholder="Sequence 2 index">
+        <button type="submit">Align</button>
+    </form>
+
+    {% if alignment_result %}
+    <h2>Alignment Result</h2>
+    <pre>{{ alignment_result }}</pre>
+    {% endif %}
+    <p>Go back to the <a href="/dataframe">table page</a>.</p>
+    <p>Go back to the <a href="/">home page</a>.</p>
+</body>
+</html>
