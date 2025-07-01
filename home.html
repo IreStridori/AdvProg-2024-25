@@ -2,17 +2,168 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Upload FASTA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MGA Home Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color:#e7d6fda8 ;
+        }
+        
+        header {
+            background-color: #2d1a45;
+            color: white;
+            padding: 10px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items:center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        
+        .logo-text {
+            font-size: 40px;
+            letter-spacing: 1px;
+        }
+        
+        .project {
+            padding: 8px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-style: italic;
+        }
+        
+        .tool-container {
+            background-color: white;
+            max-width: 1000px;
+            margin: -50px auto 50px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .container1 {
+            display: flex;
+            gap: 20px; /* spazio tra i div */
+        }
+
+        .upload-section {
+            border: 3px solid rgb(84, 27, 138); /* Bordo più spesso */
+            border-radius: 15px; /* Angoli più arrotondati */
+            padding: 20px; /* Padding interno aumentato */
+            background-color: rgba(255, 255, 255, 0.3);
+            margin: auto;
+            text-align: center;
+            width: auto; /* Auto invece di una percentuale fissa */
+            display: inline-block; /* Per adattarsi al contenuto */
+        }
+        
+        .upload-section h2 form {
+            margin-top: 0;
+            width: 100%; /* Assicura che il titolo si adatti al div */
+        }
+    
+        button {
+            background-color: white;
+            color: rgb(64, 0, 106);
+            height: 45px;
+            width: 130px; 
+            border-color: rgb(64, 0, 106);
+            border-radius: 8px; /* Più arrotondato */
+            cursor: pointer;
+            border-width: 3px;
+            margin-top: 15px;
+            font-size: 1.1em; /* Testo del pulsante più grande */
+        }
+        
+        button:hover{
+            color: white;
+            background-color:  rgb(64, 0, 106);
+        }
+
+        button:active{
+            transform: scale(0.9);
+        }
+        
+        input[type="file"] {
+            margin-bottom: 15px;
+            font-size: 1.1em; /* Input più grande */
+            padding: 5px;
+        }
+        
+        a {
+            color:rgb(84, 27, 138);
+            margin-top: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .file-upload-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+    </style>
 </head>
 <body>
-    <h1>Hello! Welcome to the mithochondrial genomes analyser </h1>
-    <h2>This tool allows you to handle your FASTA file and supports various operations related to mithochondrial DNA analysis </h2>
-    <br>
-    <h3>Upload a FASTA File</h3>
+    <header>
+        <div class="logo-container">        
+            <span class="logo-text">MGA</span>
+            
+        </div>
+        <div class="project">
+            <h5">Advanced programming project done by Figini Martina, Grisolia Sveva Francesca and Stridori Irene</h5>
+        </div>
+    </header>
+    
+    <div style="height: 200px;">
+        <h1 style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; padding-top: 50px; text-align: center; color: rgb(84, 27, 138);">Welcome to the Mithochondrial Genome Analyser! </h1>
+    </div>
 
-    <form action="/dataframe" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".fasta">
-        <button type="submit">Upload</button>
-    </form>
+    <div class="tool-container">
+        <div class="container1">
+            <div class="upload-section">
+                <h2 style="text-align: left;">Upload a FASTA File</h2>
+                <form action="/upload" method="post" enctype="multipart/form-data" style="text-align: left; padding-top: 20px;">
+                    <div class="file-upload-container">
+                        <input type="file" name="file" accept=".fasta">
+                        <button type="submit">Upload</button>
+                    </div>
+                </form>
+            </div>
+           <div style="margin-top: 40px;">
+                {% if uploaded_file %}
+                <p> Would you like to look at your parsed file? </p>
+                <a href="/dataframe">Visualize your DataFrame </a>
+            {% endif %} 
+            </div>
+        </div>
+       
+        
+        <div style="margin-top: 50px;" >
+            <h2> The tool</h2>
+            <p style="text-align:justify">This tool allows genomicists to handle FASTA files and supports various operations related to mithochondrial DNA analysis. It is able to read a FASTA file and organise it in a 
+            user friendly manner, as a pandas dataframe. Other than this, it can also provide statistics related to the uploaded sequence and to perform motif search and pairwise alignment. </p>
+            <br> <h3> How to use it?</h3> 
+            <p> You simply upload your FASTA file in the dedicated section and the tool does everything for you! :)</p>
+        </div>
+    
+    </div>
+ 
 </body>
 </html>

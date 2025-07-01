@@ -1,25 +1,149 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="EN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sequence Alignment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color:#e7d6fda8 ;
+        }
+        
+        header {
+            background-color: #2d1a45;
+            color: white
+            padding: 10px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items:center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-text {
+            font-size: 40px;
+            letter-spacing: 1px;
+	    color: white
+        }
+        
+        nav ul {
+            display:flex;
+            list-style: none;
+        }
+        
+        nav ul li a {
+            margin: 0 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        
+        .tool-container {
+            background-color: trasparent
+            max-width: 1000px;
+            margin: -50px auto 50px;
+            padding: 30px;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .description {
+            margin-top: 50px;
+            margin-left: 30px;
+        }
+ 
+        button {
+            background-color: white;
+            color: rgb(64, 0, 106);
+            height: 40px;
+            width: 120px; 
+            border-color: rgb(64, 0, 106);
+            border-radius: 8px; /* Più arrotondato */
+            cursor: pointer;
+            border-width: 3px;
+            margin-top: 15px;
+            font-size: 1.1em; /* Testo del pulsante più grande */
+        }
+        
+        button:hover{
+            color: white;
+            background-color:  rgb(64, 0, 106);
+        }
+
+        button:active{
+            transform: scale(0.9);
+        }
+        
+        a {
+            color:rgb(84, 27, 138);
+            margin-top: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+    </style>
+
 </head>
 <body>
-    <h1>Align Sequences</h1>
+    <header>
+        <div class="logo-container">
+            <span class="logo-text">MGA</span>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/dataframe">DataFrame</a></li>
+                <li><a href="/stats">Statistics</a></li>
+                <li><a href="/motif">Search Motif</a></li>
+                <li><a href="/align"><u>Alignment</u></a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <p>{{ message }}</p>
+    <div style=" height: 200px;">
+        <h1 style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; padding-top: 50px; text-align: left; padding-left: 30px; color: rgb(84, 27, 138);">Pairwise Aligner</h1>
+    </div>
 
-    <form action="/align" method="post">
-        <input type="number" name="seq1" placeholder="Sequence 1 index">
-        <input type="number" name="seq2" placeholder="Sequence 2 index">
-        <button type="submit">Align</button>
-    </form>
+    <div class="tool-container">
+        <p>{{ message }}</p>
+	<p> Sequence indeces are zero based </p>
 
-    {% if alignment_result %}
-    <h2>Alignment Result</h2>
-    <pre>{{ alignment_result }}</pre>
-    {% endif %}
-    <p>Go back to the <a href="/dataframe">table page</a>.</p>
-    <p>Go back to the <a href="/">home page</a>.</p>
+        <form action="/align" method="post">
+            <input style="height:30px;" type="number" name="seq1" placeholder="Sequence 1 index">
+            <input style="height:30px;" type="number" name="seq2" placeholder="Sequence 2 index">
+            <button type="submit">Align</button>
+        </form>
+        <br><br>
+        {% if alignment_result %}
+        <h2>Alignment Result</h2>
+        <pre style="font-family: 'Courier New', monospace;">{{ alignment_result }}</pre>
+        {% endif %}
+            
+    </div>
+    
+    <div class="description">
+            <p style="text-align: justify;"> Would you like to do some more operations with your sequences? You can either select an option in the top menu or choose here between: </p>
+            <a href="/dataframe">DataFrame page</a> | <a href="/stats">Statistics</a> | <a href="/motif">Motif Search</a>
+            <p>Go back to the <a href="/">home page</a>.</p>
+            
+        </div>
+
 </body>
 </html>

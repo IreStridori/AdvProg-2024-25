@@ -1,30 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="EN">
 <head>
     <meta charset="UTF-8">
-    <title>FASTA dataframe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FASTA DataFrame</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color:#e7d6fda8 ;
+        }
+        
+        header {
+            background-color: #2d1a45;
+            color: white;
+            padding: 10px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items:center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-text {
+            font-size: 40px;
+            letter-spacing: 1px;
+        }
+        
+        nav ul {
+            display:flex;
+            list-style: none;
+        }
+        
+        nav ul li a{
+            margin: 0 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        
+        .tool-container {
+            background-color: trasparent;
+            max-width: 1000px;
+            margin: -50px auto 50px;
+            padding: 30px;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        a {
+            color:rgb(84, 27, 138);
+            margin-top: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+    </style>
+
 </head>
 <body>
-    <h1>FASTA Sequence Statistics</h1>
-    <p> Would you like to do some more operations with your sequences? </p>
-    <a href="/stats">Visualize statistics </a>
-    <a href="/motif">Search Motif</a> | <a href="/align">Align Sequences</a>
-    <p>Go back to the <a href="/">home page</a>.</p>
-    <h2> This is the summary table that shows the sequences in your file </h2>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Description</th>
-            <th>Sequence </th>
-        </tr>
-        {% for s in stats %}
-        <tr>
-            <td>{{ s.ID }}</td>
-            <td>{{ s.Description }}</td>
-            <td>{{s.Sequence}} </td>
-        </tr>
-        {% endfor %}
-    </table >
+    <header>
+        <div class="logo-container">
+            <span class="logo-text">MGA</span>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/dataframe"><u>DataFrame</u></a></li>
+                <li><a href="/stats">Statistics</a></li>
+                <li><a href="/motif">Search Motif</a></li>
+                <li><a href="/align">Alignment</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div style="height: 200px;">
+        <h1 style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; padding-top: 50px; text-align: left; padding-left: 30px; color: rgb(84, 27, 138);">FASTA DataFrame </h1>
+    </div>
+
+    <div class="tool-container">
+        <h2> This is the summary table that shows the sequences in your file </h2>
+        
+        <table style= "border-radius: 10px; border-color:rgb(84, 27, 138); border-style: solid;" border="3">
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Sequence</th>
+            </tr>
+            {% for s in data %}
+            <tr>
+                <td>{{ s.ID }}</td>
+                <td>{{ s.Description }}</td>
+                <td>{{s.Sequence}} </td>
+                
+            </tr>
+            {% endfor %} </table>
+    
+    </div>
+    
+    <div style="margin-top: 50px; margin-left: 30px;">
+            <p style="text-align: justify;"> Would you like to do some more operations with your sequences? You can either select an option in the top menu or choose here between: </p>
+            <a href="/stats">Visualize statistics </a> | <a href="/motif">Search Motif</a> | <a href="/align">Align Sequences</a>
+            <p>Go back to the <a href="/">home page</a>.</p>
+            
+        </div>
 
 </body>
 </html>
