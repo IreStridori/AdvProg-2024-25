@@ -56,7 +56,7 @@ class FastaParser:
         """describe(include="all") restituisce un riepilogo del dataset.: numero di valori unici per ogni colonna, frequenza degli identificatori, lunghezza media delle sequenze"""
         return self._data.describe(include="all")
 
-    @ensure_data_loaded #aggiunto
+    @ensure_data_loaded
     def get_row(self, index: int ):
         """Restituisce la sequenza e i dettagli della riga indicata."""
         if index >= len(self._data) or index < 0:
