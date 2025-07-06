@@ -12,7 +12,7 @@ The project focuses on the development of a software which is capable of reading
 
 ## **2. System design**
 In this repository you will find these files:
-- `CRCcards.xlsx`    <- Class-Responsibility-Collaborator cards
+- `CRCcards.pdf`    <- Class-Responsibility-Collaborator cards
 - `README.md` 	<- project documentation
 - `UMLdiagram.pdf`	<- UML diagram
 - `classes.py`  <- Python file with the algorithms and database handling
