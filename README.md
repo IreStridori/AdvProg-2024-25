@@ -26,8 +26,8 @@ The things you should have in your folder when running the Web interface
 	--| app.py
 	--| classes.py
 	--| uploads/
+ 		--| file.fasta
  	--| _pycache_/
-  	--| file.fasta
 	--| templates/
 		--| home.html
 		--| dataframe.html
