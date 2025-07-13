@@ -1,4 +1,4 @@
-'''flask in cui provo le route motif divise'''
+
 from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.utils import secure_filename
 import os
