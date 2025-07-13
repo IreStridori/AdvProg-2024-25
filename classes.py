@@ -63,7 +63,7 @@ class FastaParser(FileParser): #eredita init da FileParser
         return row
 
 
-class GenomicEntity(ABC):
+class GenomicEntity():
     """ Superclasse per sequenze """
     def __init__(self, identifier, description, sequence):
         self._identifier = identifier #protected così che puoi accedere da mithochondrial dna
