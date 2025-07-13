@@ -21,11 +21,9 @@ class FileParser(ABC):
         pass
 
 
-class FastaParser:
+class FastaParser(FileParser): #eredita init da FileParser
     """ Classe per il parsing del file FASTA """
-    def __init__(self):
-        self._data = None
-
+    
     def parse_file(self, file: str) -> None:
         sequences = []
         f = open(file, "r")
