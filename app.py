@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.utils import secure_filename
 import os
@@ -48,7 +47,6 @@ def upload_file():
         # Salva il DataFrame nella sessione
         session['filepath'] = filepath
         return redirect(url_for('home'))
-#non si può render_template in una route per un'altra route , si può solo essere redirectati  
     
 @app.route('/dataframe', methods=['GET', 'POST'])
 def dataframe():
@@ -101,8 +99,7 @@ def stats():
                  subseq=mito_DNA.extract_subseq_by_indexing(start, end)
             
     return render_template('stats.html', stats=stats, subseq=subseq)
-    #return render_template('stats.html')
-#return redirect(request.url)
+
 
 @app.route('/motif', methods=['GET', 'POST'])
 def motif():
@@ -121,15 +118,13 @@ def motif():
         
         search_motif = []
         if motif_input_search:
-            if motif_input_search:
-                seq_idx, motif_length, minimum = map(int, motif_input_search.split(','))
-                extraction= motif_analyzer.extract_motifs(seq_idx, motif_length, minimum)
-            for _, row in extraction.iterrows():
-                search_motif.append({
-            'Motif': row['Motif'],
-            'Indexes': row['Indexes'],
-            'Repetitions': len(row['Indexes']),
-        })
+            seq_idx, motif_length, minimum = map(int, motif_input_search.split(','))
+            extraction= motif_analyzer.extract_motifs(seq_idx, motif_length, minimum)
+        for _, row in extraction.iterrows():
+            search_motif.append({
+        'Motif': row['Motif'],
+        'Indexes': row['Indexes'],
+        'Repetitions': len(row['Indexes']), })
                 
             
         find_motif = []
