@@ -74,7 +74,7 @@ The things you should have in your folder when running the Web interface
    - **Methods**: 2 different ways of analysing a motif were implemented.
      - `extract_motifs(self, seq_idx, motif_length, minimum)`: if the user does not have a specific motif to search, this method extracts all possible subsequences of length `motif_length` from the given `seq_idx` which repeats at least `minimum` times. Returns a Pandas DataFrame with motif counts.
        
-     - `find_motif(self, motif)`: if the user has a specific generic motif, this searches the subsequence across all sequences in the dataset. Returns a Pandas DataFrame listing:
+     - `find_motif(self, motif)`: if the user has a specific motif, this searches the subsequence across all sequences in the dataset. Returns a Pandas DataFrame listing:
 		- **Motif** searched 
  		- Sequence **Identifier**   
 		- **Number of occurrences** per sequence  
