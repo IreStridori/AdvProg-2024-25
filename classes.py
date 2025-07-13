@@ -151,7 +151,7 @@ class SequenceAlignment:
     def format_alignment(self, n=1) -> str: 
         """ Formatta e restituisce i primi N risultati di allineamento """
         results = []
-        for alignment in self.__alignments[n]:
+        for alignment in self.__alignments[:n]:
             results.append(str(alignment))
         return "\n".join(results)
 
