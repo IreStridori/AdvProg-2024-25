@@ -58,7 +58,7 @@ class FastaParser(FileParser): #eredita init da FileParser
     def get_row(self, index: int ):
         """Restituisce la sequenza e i dettagli della riga indicata."""
         if index >= len(self._data) or index < 0:
-            raise IndexError(f"Indice {index} fuori dai limiti).")
+            raise IndexError(f"Index {index} out of range.")
         row = self._data.iloc[index].tolist()
         return row
 
