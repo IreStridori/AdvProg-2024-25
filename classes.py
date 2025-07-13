@@ -91,7 +91,7 @@ class MitochondrialDNA(GenomicEntity):
     
 
 class MotifAnalyser(ABC):
-    """ CLASSE ASTRATTA per la ricerca di mmotifi perché potrei voler lavorare con altre strutture dati oltre al DataFrame"""
+    """ CLASSE ASTRATTA per la ricerca di motivi perché potrei voler lavorare con altre strutture dati oltre al DataFrame"""
     def __init__(self, data):
         self._data = data #nel nostro caso il dato sarà il dataframe
 
@@ -100,7 +100,7 @@ class MotifAnalyser(ABC):
         pass
 
 
-class SequenceMotif(MotifAnalyser): #inerita init da superclasse
+class SequenceMotif(MotifAnalyser): #eredita init da superclasse
     """ Classe per l'analisi dei motivi genetici """
     
     def extract_motifs(self, seq_idx, motif_length, minimum):
