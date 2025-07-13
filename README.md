@@ -47,11 +47,11 @@ The things you should have in your folder when running the Web interface
 
 - **Specific responsibilities**:
 	- Reads a FASTA file line by line.
- 	- Organizes the different file's objects into a dictionary with three keys:  
+ 	- Organizes the different file's objects into a list of lists with three keys:  
 		- **ID**: The sequence identifier (e.g., _NC_012920.1_).  
 		- **Description**: The description of the organism (e.g., _Homo sapiens mitochondrion, complete genome_).
 		- **Sequence**: The nucleotide sequence itself (e.g., _GATCACAGGT..._).  
-	- Converts the dictionary into a Pandas DataFrame for better organization and management and returns it
+	- Converts the sequences into a Pandas DataFrame for better organization and management and returns it
  	- Gives out summary of the dataset via a specific method `describe`
   	- Returns a specific sequence of the DataFrame and its details 
 
