@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 import os
 from classes import FastaParser, MitochondrialDNA, SequenceMotif, SequenceAlignment
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'  # Necessario per usare session
+app.secret_key = 'progettoMGA2025'  # Necessario per usare session
 
 # Configurazione upload
 UPLOAD_FOLDER = 'uploads'
