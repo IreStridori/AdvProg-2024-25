@@ -47,7 +47,7 @@ The things you should have in your folder when running the Web interface
 
 - **Specific responsibilities**:
 	- Reads a FASTA file line by line.
- 	- Organizes the different file's objects into a list of lists with three keys:  
+ 	- Organizes the different file's objects into a list of lists with:  
 		- **ID**: The sequence identifier (e.g., _NC_012920.1_).  
 		- **Description**: The description of the organism (e.g., _Homo sapiens mitochondrion, complete genome_).
 		- **Sequence**: The nucleotide sequence itself (e.g., _GATCACAGGT..._).  
